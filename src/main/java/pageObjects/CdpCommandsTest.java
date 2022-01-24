@@ -19,21 +19,28 @@ public class CdpCommandsTest {
         //which request is frontend making
         devTools.addListener(Network.requestWillBeSent(), request -> {
             Request req = request.getRequest();
-            System.out.println(req.getUrl());
+            if(req.getUrl().toString().matches(".*/fps-prod-na-frontdoor.+") && req.getMethod().toString().equals("POST")){
+                System.out.println(req.getUrl());
+
+            }
+
         });
 
         //Event(response) will get fired
         devTools.addListener(Network.responseReceived(), response ->
         {
-            /*Response res = response.getResponse();
-            System.out.println(res.getUrl());*/
-            //response.getResponse().getHeaders();
-            System.out.println("responce is: " + response.getResponse().getUrl());
-            System.out.println("responce is: " +response.getResponse().getHeaders());
-            System.out.println("responce is: " +response.getResponse().getStatus());
+            Response res = response.getResponse();
+            if(res.getUrl().toString().matches(".*/fps-prod-na-frontdoor.+") && res.getStatus().toString().equals("POST")){
+                System.out.println(res.getUrl());
+                System.out.println("responce is: " + response.getResponse().getUrl());
+                System.out.println("responce is: " +response.getResponse().getHeaders());
+                System.out.println("responce is: " +response.getResponse().getStatus());
+
+            }
+
         });
 
-        driver.get("https://rahulshettyacademy.com/angularAppdemo/");
-        driver.findElement(By.xpath("//button[@routerlink='/library']")).click();
+        driver.get("https://www.ford.com");
+        //driver.findElement(By.xpath("//button[@routerlink='/library']")).click();
     }
 }
