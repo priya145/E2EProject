@@ -1,10 +1,15 @@
 package Academy;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
@@ -16,6 +21,8 @@ import pageObjects.ForgotPassword;
 import pageObjects.LandingPage;
 import pageObjects.LoginPage;
 import resources.base;
+
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 public class HomePage extends base{
 	public WebDriver driver;
@@ -39,8 +46,14 @@ public class HomePage extends base{
 		driver.get(prop.getProperty("url"));
 		LandingPage l=new LandingPage(driver);
 		LoginPage lp=l.getLogin(); //driver.findElement(By.css()
-		lp.getEmail().sendKeys(Username);
-		lp.getPassword().sendKeys(Password);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		WebElement password = driver.findElement(By.xpath("//input[@type='password']"));
+		password.sendKeys(Password);
+		WebElement email = driver.findElement(with(By.tagName("input")).above(password));
+		email.sendKeys(Password);
+		//lp.getEmail().sendKeys(Username);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		//lp.getPassword().sendKeys(Password);
 
 		log.info(text);
 		

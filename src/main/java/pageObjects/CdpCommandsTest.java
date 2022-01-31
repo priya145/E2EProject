@@ -20,7 +20,7 @@ public class CdpCommandsTest {
         devTools.addListener(Network.requestWillBeSent(), request -> {
             Request req = request.getRequest();
             if(req.getUrl().toString().matches(".*/fps-prod-na-frontdoor.+") && req.getMethod().toString().equals("POST")){
-                System.out.println(req.getUrl());
+                System.out.println("request is " +req.getUrl());
 
             }
 
@@ -30,11 +30,11 @@ public class CdpCommandsTest {
         devTools.addListener(Network.responseReceived(), response ->
         {
             Response res = response.getResponse();
-            if(res.getUrl().toString().matches(".*/fps-prod-na-frontdoor.+") && res.getStatus().toString().equals("POST")){
+            if(res.getStatus().toString().equals("200")){
                 System.out.println(res.getUrl());
-                System.out.println("responce is: " + response.getResponse().getUrl());
-                System.out.println("responce is: " +response.getResponse().getHeaders());
-                System.out.println("responce is: " +response.getResponse().getStatus());
+                System.out.println("response is: " + response.getResponse().getUrl());
+                System.out.println("response is: " +response.getResponse().getHeaders());
+                System.out.println("response is: " +response.getResponse().getStatus());
 
             }
 
